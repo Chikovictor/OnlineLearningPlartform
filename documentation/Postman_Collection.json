@@ -1,0 +1,54 @@
+
+```json
+{
+"info": {
+"name": "Online Learning API",
+"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+},
+"item": [
+{
+"name": "Get All Courses",
+"request": {
+"method": "GET",
+"url": "http://localhost:8080/api/courses"
+}
+},
+{
+"name": "Create Course",
+"request": {
+"method": "POST",
+"url": "http://localhost:8080/api/courses",
+"body": {
+"mode": "raw",
+"raw": "{\"title\":\"Kenyan History\",\"description\":\"Learn about Kenya\"}",
+"options": {"raw": {"language": "json"}}
+}
+}
+},
+// Add similar for other CRUD, enroll, submit.
+{
+"name": "Enroll",
+"request": {
+"method": "POST",
+"url": "http://localhost:8080/api/courses/enroll",
+"body": {
+"mode": "raw",
+"raw": "{\"courseId\":1}",
+"options": {"raw": {"language": "json"}}
+}
+}
+},
+{
+"name": "Submit Quiz",
+"request": {
+"method": "POST",
+"url": "http://localhost:8080/api/quizzes/submit",
+"body": {
+"mode": "raw",
+"raw": "{\"quizId\":1, \"userAnswer\":\"1963\"}",
+"options": {"raw": {"language": "json"}}
+}
+}
+}
+]
+}

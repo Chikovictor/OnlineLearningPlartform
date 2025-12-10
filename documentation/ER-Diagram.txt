@@ -1,0 +1,20 @@
++---------+       +---------+
+| Course  |       | Lesson  |
++---------+       +---------+
+| id (PK) |<--1--*| id (PK) |
+| title   |       | title   |
+| desc    |       | content |
++---------+       | course_id (FK) |
+                  +---------+
+
++---------+
+| Quiz    |
++---------+
+| id (PK) |
+| question|
+| correctAnswer |
+| course_id (FK) |
++---------+
+^
+|
+1--* from Course

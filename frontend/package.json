@@ -3,15 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "axios": "^1.0.0",  // Axios: Library for making HTTP requests to backend.
-    "bootstrap": "^5.0.0",  // Bootstrap 5: For styling and responsive UI.
-    "react": "^18.0.0",  // React 18+: Core library for building UI.
-    "react-dom": "^18.0.0",  // React DOM: For rendering to browser.
-    "react-scripts": "5.0.1"  // Scripts for build/run.
+    "axios": "^1.7.2",
+    "bootstrap": "^5.3.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",  // Starts dev server at localhost:3000.
-    "build": "react-scripts build"  // Builds for production.
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": ["react-app", "react-app/jest"]
   },
   "browserslist": {
     "production": [">0.2%", "not dead", "not op_mini all"],

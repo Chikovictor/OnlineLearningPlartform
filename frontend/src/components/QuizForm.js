@@ -47,7 +47,7 @@ const QuizForm = ({ courseId }) => {
             <h2>Quizzes</h2>
             {quizzes.map(quiz => (
                 <div key={quiz.id}>
-                    <p>{quiz.question}</p>  // Kenyan context, e.g., question about Kenya.
+                    <p>{quiz.question}</p>
                     <input
                         type="text"
                         onChange={(e) => handleChange(quiz.id, e.target.value)}  // e.target.value: Input value.

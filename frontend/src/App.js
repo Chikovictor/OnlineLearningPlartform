@@ -1,61 +1,65 @@
-import React, { useState, useEffect } from 'react';  // Hooks: useState for state, useEffect for side effects.
-import axios from 'axios';  // Axios: For API calls.
-import CourseList from './components/CourseList';  // Import components.
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import CourseList from './components/CourseList';
 import LessonView from './components/LessonView';
 import QuizForm from './components/QuizForm';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-// App: Functional component - a function returning JSX (HTML-like syntax in JS).
 function App() {
-    // useState: Hook to add state to functional components. Returns [value, setter].
-    const [courses, setCourses] = useState([]);  // courses: Array of courses from backend.
-    const [selectedCourse, setSelectedCourse] = useState(null);  // selectedCourse: For viewing lessons/quizzes.
-    const [loading, setLoading] = useState(true);  // loading: For loading state.
-    const [error, setError] = useState(null);  // error: For error state.
+    const [courses, setCourses] = useState([]);
+    const [selectedCourse, setSelectedCourse] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    // useEffect: Hook for side effects like API calls. Runs after render.
-    // Empty [] means run once on mount.
     useEffect(() => {
-        // Async function inside: Fetches data asynchronously.
         const fetchCourses = async () => {
             try {
-                // axios.get: Makes GET request to backend API.
                 const response = await axios.get('http://localhost:8080/api/courses');
-                setCourses(response.data);  // Update state with data.
-                setLoading(false);  // End loading.
+                setCourses(response.data || []);
+                setLoading(false);
             } catch (err) {
-                setError('Failed to fetch courses');  // Handle error.
+                console.error("Error fetching courses:", err);
+                setError('Failed to load courses. Is backend running on port 8080?');
                 setLoading(false);
             }
         };
         fetchCourses();
-    }, []);  // Dependency array: Empty, so runs once.
+    }, []);
 
-    // Function to handle enrollment (dummy).
     const handleEnroll = async (courseId) => {
         try {
             await axios.post('http://localhost:8080/api/courses/enroll', { courseId });
-            alert('Enrolled successfully!');  // alert: Browser popup.
+            alert('Enrolled successfully!');
         } catch (err) {
             alert('Enrollment failed');
         }
     };
 
-    // JSX: Returns UI. Conditional rendering for loading/error.
-    if (loading) return <div className="container">Loading...</div>;  // className: Like HTML class for Bootstrap.
-    if (error) return <div className="container">Error: {error}</div>;
+    if (loading) return <div className="container mt-5"><h2>Loading courses...</h2></div>;
+    if (error) return <div className="container mt-5 text-danger"><h2>Error: {error}</h2><p>Check if backend is running.</p></div>;
 
     return (
-        <div className="container mt-5">  // Bootstrap classes: container for layout, mt-5 for margin.
-            <h1>Online Learning Platform - Kenyan Context</h1>  // h1: Heading.
-            <p>Welcome to courses with Kenyan focus, e.g., History of Kenya.</p>
-            <CourseList
-                courses={courses}  // Props: Pass data to child component (prop drilling).
-                onEnroll={handleEnroll}
-                onSelect={setSelectedCourse}  // onSelect: Callback prop.
-            />
-            {selectedCourse && (  // Conditional: If selectedCourse, show lessons/quizzes.
+        <div className="container mt-5">
+            <h1>Online Learning Platform - Kenyan Context</h1>
+            <p>Welcome! Explore courses on Kenyan history and culture.</p>
+
+            {courses.length === 0 ? (
+                <div className="alert alert-info">
+                    <h4>No courses found</h4>
+                    <p>Add a course using Postman (teacher mode), then refresh.</p>
+                </div>
+            ) : (
+                <CourseList
+                    courses={courses}
+                    onEnroll={handleEnroll}
+                    onSelect={setSelectedCourse}
+                />
+            )}
+
+            {selectedCourse && (
                 <>
-                    <LessonView courseId={selectedCourse} />  // <> </>: Fragment for grouping without extra div.
+                    <hr />
+                    <LessonView courseId={selectedCourse} />
                     <QuizForm courseId={selectedCourse} />
                 </>
             )}
@@ -63,4 +67,4 @@ function App() {
     );
 }
 
-export default App;  // export: Makes it importable.
+export default App;

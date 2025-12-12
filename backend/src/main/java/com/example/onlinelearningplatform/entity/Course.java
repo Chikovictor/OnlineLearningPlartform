@@ -1,8 +1,11 @@
 package com.example.onlinelearningplatform.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.FetchType;
+import com.example.onlinelearningplatform.entity.Lesson;
+import com.example.onlinelearningplatform.entity.Quiz;
 
 // @Entity: Marks this class as a JPA entity, meaning it maps to a database table.
 // Table name defaults to class name 'Course'.
@@ -23,8 +26,8 @@ public class Course {
     // mappedBy: The field in Lesson that owns the relationship (foreign key in Lesson table).
     // cascade: Operations like save/delete on Course propagate to Lessons.
 
-    private List<Lesson> lessons = new ArrayList<>();
-    private List<Quiz> quizzes = new ArrayList<>();
+//    private List<Lesson> lessons = new ArrayList<>();
+//    private List<Quiz> quizzes = new ArrayList<>();
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Lesson> lessons = new ArrayList<>();  // Keep EAGER
 

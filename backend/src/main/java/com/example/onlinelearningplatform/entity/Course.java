@@ -3,9 +3,10 @@ package com.example.onlinelearningplatform.entity;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.FetchType;
-import com.example.onlinelearningplatform.entity.Lesson;
-import com.example.onlinelearningplatform.entity.Quiz;
+
+// Import Jackson annotations
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 // @Entity: Marks this class as a JPA entity, meaning it maps to a database table.
 // Table name defaults to class name 'Course'.
@@ -25,14 +26,19 @@ public class Course {
     // @OneToMany: Defines a one-to-many relationship (one course has many lessons).
     // mappedBy: The field in Lesson that owns the relationship (foreign key in Lesson table).
     // cascade: Operations like save/delete on Course propagate to Lessons.
-
-//    private List<Lesson> lessons = new ArrayList<>();
-//    private List<Quiz> quizzes = new ArrayList<>();
+    
+    // Add @JsonManagedReference to handle serialization
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Lesson> lessons = new ArrayList<>();  // Keep EAGER
+    @JsonManagedReference("course-lessons")  // Add this line
+    private List<Lesson> lessons = new ArrayList<>();
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)  // Change to LAZY
+    // Add @JsonManagedReference for quizzes too
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference("course-quizzes")  // Add this line
     private List<Quiz> quizzes = new ArrayList<>();
+
+    // Alternative: If you want to use @JsonIgnoreProperties instead:
+    // @JsonIgnoreProperties("course") - This tells Jackson to ignore the 'course' field in Lesson
 
     // Default constructor: Required by JPA for entity instantiation.
     public Course() {}
@@ -50,8 +56,15 @@ public class Course {
     public List<Quiz> getQuizzes() { return quizzes; }
     public void setQuizzes(List<Quiz> quizzes) { this.quizzes = quizzes; }
 
-    // Exam concept: Dependency Injection (DI)
-    // DI is a design pattern where dependencies (e.g., services) are provided to a class instead of created inside it.
-    // In Spring, @Autowired injects beans automatically. Here, repositories are injected into controllers (see controllers).
-    // This promotes loose coupling and testability. For example, CourseRepository is injected without 'new'.
+    // Helper method to add a lesson
+    public void addLesson(Lesson lesson) {
+        lessons.add(lesson);
+        lesson.setCourse(this);
+    }
+    
+    // Helper method to add a quiz
+    public void addQuiz(Quiz quiz) {
+        quizzes.add(quiz);
+        quiz.setCourse(this);
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.onlinelearningplatform.entity;
 
 import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 // @Entity: Maps to 'Quiz' table.
 @Entity
@@ -16,6 +17,7 @@ public class Quiz {
 
     @ManyToOne
     @JoinColumn(name = "course_id")
+    @JsonBackReference("course-quizzes")  // Add this annotation
     private Course course;  // course: Parent course.
 
     public Quiz() {}

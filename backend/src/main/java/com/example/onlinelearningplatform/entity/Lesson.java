@@ -1,6 +1,7 @@
 package com.example.onlinelearningplatform.entity;
 
 import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 // @Entity: Maps to 'Lesson' table.
 @Entity
@@ -18,6 +19,7 @@ public class Lesson {
     // @JoinColumn: Defines the foreign key column 'course_id' in Lesson table.
     @ManyToOne
     @JoinColumn(name = "course_id")
+    @JsonBackReference("course-lessons")  // Add this annotation
     private Course course;  // course: The parent course.
 
     public Lesson() {}

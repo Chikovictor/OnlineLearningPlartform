@@ -55,7 +55,7 @@ const QuizForm = ({ courseId }) => {
                     />
                 </div>
             ))}
-            <button className="btn btn-success" onClick={handleSubmit}>Submit Quiz</button>
+            <button className="btn btn-success" onClick={handleSubmit}>Submit Answers</button>
             {result && <p>Result: {result}</p>}
         </div>
     );

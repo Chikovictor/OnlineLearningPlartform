@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const LessonView = ({ courseId }) => {  // Prop: courseId.
+const LessonView = ({ courseId }) => {
     const [lessons, setLessons] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -9,9 +9,8 @@ const LessonView = ({ courseId }) => {  // Prop: courseId.
     useEffect(() => {
         const fetchLessons = async () => {
             try {
-                // Fetch lessons for course (assuming backend has /api/courses/{id} with lessons populated).
                 const response = await axios.get(`http://localhost:8080/api/courses/${courseId}`);
-                setLessons(response.data.lessons || []);  // Get lessons from course.
+                setLessons(response.data.lessons || []);
                 setLoading(false);
             } catch (err) {
                 setError('Failed to fetch lessons');
@@ -19,7 +18,7 @@ const LessonView = ({ courseId }) => {  // Prop: courseId.
             }
         };
         fetchLessons();
-    }, [courseId]);  // Dependency: Re-run if courseId changes.
+    }, [courseId]);
 
     if (loading) return <div>Loading lessons...</div>;
     if (error) return <div>Error: {error}</div>;
@@ -30,7 +29,9 @@ const LessonView = ({ courseId }) => {  // Prop: courseId.
             {lessons.map(lesson => (
                 <div key={lesson.id}>
                     <h3>{lesson.title}</h3>
-                    <p>{lesson.content}</p>  // Kenyan context here, e.g., content about Kenya.
+
+                    {/* Kenyan context here, e.g., content about Kenya. */}
+                    <p>{lesson.content}</p>
                 </div>
             ))}
         </div>

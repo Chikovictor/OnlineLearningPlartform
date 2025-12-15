@@ -60,7 +60,6 @@ public class QuizController {
     }
 
     // Specific endpoint: /api/quiz/submit - Submits answer and checks if correct.
-    // In real app, would save score; here, simple check.
     @PostMapping("/submit")
     public ResponseEntity<String> submitQuiz(@RequestBody QuizSubmission submission) {
         Optional<Quiz> quiz = quizRepository.findById(submission.getQuizId());

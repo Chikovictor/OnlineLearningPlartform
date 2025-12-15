@@ -52,7 +52,6 @@ public class CourseController {
         }
     }
 
-    // Similar for update (PUT) and delete (DELETE).
     @PutMapping("/{id}")
     public ResponseEntity<Course> updateCourse(@PathVariable Long id, @RequestBody Course updatedCourse) {
         Optional<Course> existing = courseRepository.findById(id);
@@ -76,10 +75,8 @@ public class CourseController {
     }
 
     // Specific endpoint: /api/courses/enroll - Dummy enrollment (e.g., for student).
-    // In real app, would link to user; here, just returns success message.
     @PostMapping("/enroll")
     public ResponseEntity<String> enrollInCourse(@RequestBody EnrollmentRequest request) {  // Custom request class below.
-        // Assume success; in real, check if course exists.
         return new ResponseEntity<>("Enrolled in course " + request.getCourseId(), HttpStatus.OK);
     }
 

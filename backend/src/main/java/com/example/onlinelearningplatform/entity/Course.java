@@ -9,12 +9,10 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 // @Entity: Marks this class as a JPA entity, meaning it maps to a database table.
-// Table name defaults to class name 'Course'.
 @Entity
 public class Course {
 
     // @Id: Marks this field as the primary key.
-    // @GeneratedValue: Auto-generates the ID value using database strategy (e.g., auto-increment).
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;  // id: Unique identifier for the course.
@@ -23,11 +21,7 @@ public class Course {
 
     private String description;  // description: Brief info about the course.
 
-    // @OneToMany: Defines a one-to-many relationship (one course has many lessons).
-    // mappedBy: The field in Lesson that owns the relationship (foreign key in Lesson table).
-    // cascade: Operations like save/delete on Course propagate to Lessons.
-    
-    // Add @JsonManagedReference to handle serialization
+
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference("course-lessons")  // Add this line
     private List<Lesson> lessons = new ArrayList<>();
@@ -37,8 +31,6 @@ public class Course {
     @JsonManagedReference("course-quizzes")  // Add this line
     private List<Quiz> quizzes = new ArrayList<>();
 
-    // Alternative: If you want to use @JsonIgnoreProperties instead:
-    // @JsonIgnoreProperties("course") - This tells Jackson to ignore the 'course' field in Lesson
 
     // Default constructor: Required by JPA for entity instantiation.
     public Course() {}

@@ -25,7 +25,6 @@
 }
 }
 },
-// Add similar for other CRUD, enroll, submit.
 {
 "name": "Enroll",
 "request": {
